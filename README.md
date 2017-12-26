@@ -1,5 +1,5 @@
 # journal
-Simple Journal app to practice MVC separation, protocols, master-detail interfaces, table views, and persistence.
+Simple Journal app to practice MVC separation, protocols, master-detail interfaces, table views, and persistence. This is written in Swift 4 and also implements Codable.
 
 Part One - Model Objects and Controllers
 Understand basic model-view-controller design and implementation
