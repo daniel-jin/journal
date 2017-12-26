@@ -8,28 +8,72 @@
 
 import UIKit
 
-class EntryDetailViewController: UIViewController {
+class EntryDetailViewController: UIViewController, UITextFieldDelegate {
+    
+    //MARK: - Properties
+    var entry: Entry?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var bodyTextView: UITextView!
+    
+    // MARK: - IBActions
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        
+        // Check if there is text in the title and body fields
+        guard let titleText = titleTextField.text,
+            let bodyText = bodyTextView.text else { return }
+        
+        // If entry exists, just update the information
+        if let entry = entry {
+            
+            EntryController.shared.update(entry: entry, title: titleText, text: bodyText)
+            
+        } else {
+            
+            // This is a new entry, so create new
+            EntryController.shared.addEntryWith(title: titleText, text: bodyText)
+        }
+        
+        
+        // Dismiss current view
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func clearButtonTapped(_ sender: Any) {
+        
+        titleTextField.text = "Title"
+        bodyTextView.text = "Body"
+        
     }
-    */
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+        updateViews()
+        
+    }
+    
+    func updateViews() {
+        // Check if the optional entry property is nil
+        if let entry = entry {
+            
+            // Update views
+            
+            titleTextField.text = entry.title
+            bodyTextView.text = entry.text
+            
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
 
 }

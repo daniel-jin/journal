@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Entry: Equatable {
+class Entry: Equatable, Codable {
     
     // MARK: - Properties
     
@@ -18,9 +18,9 @@ class Entry: Equatable {
     
     // Memberwise Initializer
     
-    init(title: String, text: String) {
+    init(timestamp: Date = Date(), title: String, text: String) {
         
-        self.timestamp = Date()
+        self.timestamp = timestamp
         self.title = title
         self.text = text
         
